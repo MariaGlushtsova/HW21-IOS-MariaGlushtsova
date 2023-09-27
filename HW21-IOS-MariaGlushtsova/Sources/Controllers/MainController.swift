@@ -11,6 +11,7 @@ import Kingfisher
 
 class MainController: UIViewController {
     
+    let networkManager = NetworkManager()
     var allSeries = [DataResults]()
     
     private var mainView: MainView {
@@ -29,6 +30,9 @@ class MainController: UIViewController {
 
         setupView()
         setupHierarchy()
+        mainView.tableView.dataSource = self
+        mainView.tableView.delegate = self
+        fetchSeries()
     }
     
     // MARK: - Private Functions
@@ -43,4 +47,48 @@ class MainController: UIViewController {
     private func setupHierarchy() {
         view.addSubview(mainView.tableView)
     }
+    
+    private func fetchSeries() {
+        networkManager.fetchSeries(url: networkManager.urlCharacterSeries) { [weak self] result in
+            switch result {
+            case .success(let result):
+                self?.allSeries = result.data.results
+                self?.mainView.tableView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension MainController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return allSeries.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        110
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SeriesTableViewCell", for: indexPath) as? SeriesTableViewCell
+        
+        var model = allSeries[indexPath.row]
+        
+        cell?.configure(with: model)
+        return cell ?? UITableViewCell()
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension MainController: UITableViewDelegate {
+
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+ 
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
 }

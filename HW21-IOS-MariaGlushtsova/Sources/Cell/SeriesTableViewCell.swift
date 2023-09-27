@@ -13,6 +13,7 @@ import SnapKit
 class SeriesTableViewCell: UITableViewCell {
       
     static let identifier = "SeriesTableViewCell"
+    let networkManager = NetworkManager()
 
     // MARK: - Outlets
 
@@ -84,6 +85,24 @@ class SeriesTableViewCell: UITableViewCell {
             make.bottom.equalToSuperview().offset(-5)
             make.width.equalTo(250)
             make.left.equalTo(seriesTitleLabel)
+        }
+    }
+    
+    func configure(with results: DataResults) {
+        seriesTitleLabel.text = results.title
+        seriesDescriptionLabel.text = results.description ?? "Series has no description"
+
+        guard let imagePath = results.thumbnail?.path,
+              let pathExtension = results.thumbnail?.extension,
+              let urlImage = URL(string: imagePath + "." + pathExtension)
+        else {
+            coverImage.image = UIImage(named: "placeholderImage")
+            return
+        }
+        DispatchQueue.global(qos: .background).async {
+            self.networkManager.fetchImageForCell(urlImage: urlImage) { [weak self] data in
+                self?.coverImage.kf.setImage(with: urlImage, placeholder: UIImage(named: "placeholderImage"))
+            }
         }
     }
     
