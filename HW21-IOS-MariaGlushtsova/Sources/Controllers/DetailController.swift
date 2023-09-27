@@ -13,13 +13,13 @@ class DetailController: UIViewController {
     
     let networkManager = NetworkManager()
     
-    var detailsOfSeries: DataResults? {
+    var detailsOfComics: DataResults? {
         didSet {
-            detailedSettingsView.titleLabel.text = detailsOfSeries?.title
-            detailedSettingsView.descriptionLabel.text = detailsOfSeries?.description
+            detailedSettingsView.titleLabel.text = detailsOfComics?.title
+            detailedSettingsView.descriptionLabel.text = detailsOfComics?.description
             
-            guard let imagePath = detailsOfSeries?.thumbnail?.path,
-                  let pathExtension = detailsOfSeries?.thumbnail?.extension,
+            guard let imagePath = detailsOfComics?.thumbnail?.path,
+                  let pathExtension = detailsOfComics?.thumbnail?.extension,
                   let urlImage = URL(string: imagePath + "." + pathExtension)
             else {
                 detailedSettingsView.image.image = UIImage(named: "placeholderImage")

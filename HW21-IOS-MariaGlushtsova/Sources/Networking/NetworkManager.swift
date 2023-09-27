@@ -10,9 +10,7 @@ import Alamofire
 
 class NetworkManager {
     
-    let urlCharacterSeries = "https://gateway.marvel.com/v1/public/characters/1009378/series?ts=1&apikey=17f5b878ef1fe2f49a005a90a9967aa9&hash=fa3a74f0e4fcd5aecc20f1516bc66ed4"
-    
-    let urlComics = "https://gateway.marvel.com/v1/public/comics?ts=1&apikey=17f5b878ef1fe2f49a005a90a9967aa9&hash=fa3a74f0e4fcd5aecc20f1516bc66ed4"
+    let urlCharacterComics = "https://gateway.marvel.com/v1/public/characters/1009378/comics?ts=1&apikey=17f5b878ef1fe2f49a005a90a9967aa9&hash=fa3a74f0e4fcd5aecc20f1516bc66ed4"
     
     func fetchSeries(url: String, completion: @escaping (Result<MarvelData, Error>) -> Void) {
         let request = AF.request(url)

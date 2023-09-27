@@ -1,5 +1,5 @@
 //
-//  SeriesTableViewCell.swift
+//  ComicsTableViewCell.swift
 //  HW21-IOS-MariaGlushtsova
 //
 //  Created by Admin on 27.09.23.
@@ -10,9 +10,9 @@ import Alamofire
 import Kingfisher
 import SnapKit
 
-class SeriesTableViewCell: UITableViewCell {
+class ComicsTableViewCell: UITableViewCell {
       
-    static let identifier = "SeriesTableViewCell"
+    static let identifier = "ComicsTableViewCell"
     let networkManager = NetworkManager()
 
     // MARK: - Outlets
@@ -26,14 +26,14 @@ class SeriesTableViewCell: UITableViewCell {
         return imageView
     }()
 
-    let seriesTitleLabel: UILabel = {
+    let comicsTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         label.numberOfLines = 0
         return label
     }()
     
-    let seriesDescriptionLabel: UILabel = {
+    let comicsDescriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = .systemGray
@@ -62,8 +62,8 @@ class SeriesTableViewCell: UITableViewCell {
 
     private func setupHierarchy() {
         contentView.addSubview(coverImage)
-        contentView.addSubview(seriesTitleLabel)
-        contentView.addSubview(seriesDescriptionLabel)
+        contentView.addSubview(comicsTitleLabel)
+        contentView.addSubview(comicsDescriptionLabel)
     }
 
     private func setupLayout() {
@@ -74,23 +74,23 @@ class SeriesTableViewCell: UITableViewCell {
             make.width.height.equalTo(100)
         }
 
-        seriesTitleLabel.snp.makeConstraints { make in
+        comicsTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(coverImage)
             make.left.equalToSuperview().offset(130)
             make.width.equalTo(250)
         }
 
-        seriesDescriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(seriesTitleLabel.snp.bottom).offset(5)
+        comicsDescriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(comicsTitleLabel.snp.bottom).offset(5)
             make.bottom.equalToSuperview().offset(-5)
             make.width.equalTo(250)
-            make.left.equalTo(seriesTitleLabel)
+            make.left.equalTo(comicsTitleLabel)
         }
     }
     
     func configure(with results: DataResults) {
-        seriesTitleLabel.text = results.title
-        seriesDescriptionLabel.text = results.description ?? "Series has no description"
+        comicsTitleLabel.text = results.title
+        comicsDescriptionLabel.text = results.description ?? "Comics has no description"
 
         guard let imagePath = results.thumbnail?.path,
               let pathExtension = results.thumbnail?.extension,
@@ -112,7 +112,7 @@ class SeriesTableViewCell: UITableViewCell {
         super.prepareForReuse()
         self.accessoryType = .none
         coverImage.image = nil
-        seriesTitleLabel.text = nil
-        seriesDescriptionLabel.text = nil
+        comicsTitleLabel.text = nil
+        comicsDescriptionLabel.text = nil
     }
 }

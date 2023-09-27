@@ -12,7 +12,18 @@ import Kingfisher
 class MainController: UIViewController {
     
     let networkManager = NetworkManager()
-    var allSeries = [DataResults]()
+    var allComics = [DataResults]()
+    var searcModel = [DataResults]()
+    var filteredData = [DataResults]()
+    
+    let searchController = UISearchController(searchResultsController: nil)
+    var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else { return false }
+        return text.isEmpty
+    }
+    var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
     
     private var mainView: MainView {
         return view as! MainView
@@ -27,7 +38,9 @@ class MainController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        filteredData = allComics
+        
         setupView()
         setupHierarchy()
         mainView.tableView.dataSource = self
@@ -39,9 +52,15 @@ class MainController: UIViewController {
     
     private func setupView() {
         view.backgroundColor = .white
-        title = "Series"
+        title = "Jessica Jones Comics"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.topViewController?.view.backgroundColor = UIColor(named: "Marvel")
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Поиск по комиксам"
+        searchController.searchBar.tintColor = .white
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
     
     private func setupHierarchy() {
@@ -49,10 +68,10 @@ class MainController: UIViewController {
     }
     
     private func fetchSeries() {
-        networkManager.fetchSeries(url: networkManager.urlCharacterSeries) { [weak self] result in
+        networkManager.fetchSeries(url: networkManager.urlCharacterComics) { [weak self] result in
             switch result {
             case .success(let result):
-                self?.allSeries = result.data.results
+                self?.allComics = result.data.results
                 self?.mainView.tableView.reloadData()
             case .failure(let error):
                 print(error.localizedDescription)
@@ -66,7 +85,10 @@ class MainController: UIViewController {
 extension MainController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allSeries.count
+        if isFiltering {
+            return filteredData.count
+        }
+        return allComics.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -74,10 +96,16 @@ extension MainController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SeriesTableViewCell", for: indexPath) as? SeriesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ComicsTableViewCell", for: indexPath) as? ComicsTableViewCell
         
-        var model = allSeries[indexPath.row]
+        var model: DataResults
         
+        if isFiltering {
+            model = filteredData[indexPath.row]
+        } else {
+            model = allComics[indexPath.row]
+        }
+                
         cell?.configure(with: model)
         return cell ?? UITableViewCell()
     }
@@ -88,12 +116,46 @@ extension MainController: UITableViewDataSource {
 extension MainController: UITableViewDelegate {
 
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            
             let viewController = DetailController()
-            var model = allSeries[indexPath.row]
+            
+            var model: DataResults
+            
+            if isFiltering {
+                model = filteredData[indexPath.row]
+            } else {
+                model = allComics[indexPath.row]
+            }
             
             tableView.deselectRow(at: indexPath, animated: true)
-            viewController.detailsOfSeries = model
+            viewController.detailsOfComics = model
             present(viewController, animated: true)
         }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension MainController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text ?? String())
+    }
+    
+    func filterContentForSearchText(_ searchText: String) {
+        searchSeries()
+        filteredData = searcModel.filter({ (dataSeries: DataResults) -> Bool in
+            return dataSeries.title.lowercased().contains(searchText.lowercased())
+        })
+        mainView.tableView.reloadData()
+    }
+    
+    func searchSeries() {
+        networkManager.fetchSeries(url: networkManager.urlCharacterComics) { [weak self] result in
+            switch result {
+            case .success(let result):
+                self?.searcModel.append(contentsOf: result.data.results)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
