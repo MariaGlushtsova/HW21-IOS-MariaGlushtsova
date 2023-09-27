@@ -88,7 +88,12 @@ extension MainController: UITableViewDataSource {
 extension MainController: UITableViewDelegate {
 
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
- 
+            
+            let viewController = DetailController()
+            var model = allSeries[indexPath.row]
+            
             tableView.deselectRow(at: indexPath, animated: true)
+            viewController.detailsOfSeries = model
+            present(viewController, animated: true)
         }
 }
