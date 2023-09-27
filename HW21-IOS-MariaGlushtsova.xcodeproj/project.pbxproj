@@ -13,6 +13,8 @@
 		847AC6212AC42C5C00B81394 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847AC61F2AC42C5C00B81394 /* Main.storyboard */; };
 		847AC6232AC42C5E00B81394 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847AC6222AC42C5E00B81394 /* Assets.xcassets */; };
 		847AC6262AC42C5E00B81394 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847AC6242AC42C5E00B81394 /* LaunchScreen.storyboard */; };
+		847AC62F2AC42D6100B81394 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 847AC62E2AC42D6100B81394 /* SnapKit */; };
+		847AC6312AC42D6100B81394 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 847AC6302AC42D6100B81394 /* SnapKit-Dynamic */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				847AC62F2AC42D6100B81394 /* SnapKit in Frameworks */,
+				847AC6312AC42D6100B81394 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +60,87 @@
 		847AC6182AC42C5C00B81394 /* HW21-IOS-MariaGlushtsova */ = {
 			isa = PBXGroup;
 			children = (
-				847AC6192AC42C5C00B81394 /* AppDelegate.swift */,
-				847AC61B2AC42C5C00B81394 /* SceneDelegate.swift */,
-				847AC61D2AC42C5C00B81394 /* ViewController.swift */,
+				847AC6372AC42EA200B81394 /* Sources */,
 				847AC61F2AC42C5C00B81394 /* Main.storyboard */,
-				847AC6222AC42C5E00B81394 /* Assets.xcassets */,
-				847AC6242AC42C5E00B81394 /* LaunchScreen.storyboard */,
-				847AC6272AC42C5E00B81394 /* Info.plist */,
+				847AC6342AC42E4A00B81394 /* Resources */,
+				847AC6322AC42E2600B81394 /* Storyboards */,
 			);
 			path = "HW21-IOS-MariaGlushtsova";
+			sourceTree = "<group>";
+		};
+		847AC6322AC42E2600B81394 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				847AC6242AC42C5E00B81394 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		847AC6332AC42E3800B81394 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				847AC6272AC42C5E00B81394 /* Info.plist */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		847AC6342AC42E4A00B81394 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				847AC6222AC42C5E00B81394 /* Assets.xcassets */,
+				847AC6332AC42E3800B81394 /* Configuration */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		847AC6352AC42E8200B81394 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				847AC6192AC42C5C00B81394 /* AppDelegate.swift */,
+				847AC61B2AC42C5C00B81394 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		847AC6362AC42E9400B81394 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				847AC61D2AC42C5C00B81394 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		847AC6372AC42EA200B81394 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				847AC63A2AC42ECD00B81394 /* Networking */,
+				847AC6392AC42EB700B81394 /* Models */,
+				847AC6382AC42EAD00B81394 /* Views */,
+				847AC6352AC42E8200B81394 /* App */,
+				847AC6362AC42E9400B81394 /* Controllers */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		847AC6382AC42EAD00B81394 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		847AC6392AC42EB700B81394 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		847AC63A2AC42ECD00B81394 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +159,10 @@
 			dependencies = (
 			);
 			name = "HW21-IOS-MariaGlushtsova";
+			packageProductDependencies = (
+				847AC62E2AC42D6100B81394 /* SnapKit */,
+				847AC6302AC42D6100B81394 /* SnapKit-Dynamic */,
+			);
 			productName = "HW21-IOS-MariaGlushtsova";
 			productReference = 847AC6162AC42C5C00B81394 /* HW21-IOS-MariaGlushtsova.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +191,9 @@
 				Base,
 			);
 			mainGroup = 847AC60D2AC42C5C00B81394;
+			packageReferences = (
+				847AC62D2AC42D6100B81394 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 847AC6172AC42C5C00B81394 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -293,7 +376,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "HW21-IOS-MariaGlushtsova/Info.plist";
+				INFOPLIST_FILE = "HW21-IOS-MariaGlushtsova/Resources/Configuration/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -320,7 +403,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "HW21-IOS-MariaGlushtsova/Info.plist";
+				INFOPLIST_FILE = "HW21-IOS-MariaGlushtsova/Resources/Configuration/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -361,6 +444,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		847AC62D2AC42D6100B81394 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		847AC62E2AC42D6100B81394 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847AC62D2AC42D6100B81394 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		847AC6302AC42D6100B81394 /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847AC62D2AC42D6100B81394 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 847AC60E2AC42C5C00B81394 /* Project object */;
 }
