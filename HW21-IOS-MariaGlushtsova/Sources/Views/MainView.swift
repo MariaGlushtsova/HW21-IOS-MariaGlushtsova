@@ -17,8 +17,8 @@ class MainView: UIView {
     }()
     
     private func registerCelll() {
-        tableView.register(SeriesTableViewCell.self,
-                           forCellReuseIdentifier: SeriesTableViewCell.identifier)
+        tableView.register(ComicsTableViewCell.self,
+                           forCellReuseIdentifier: ComicsTableViewCell.identifier)
     }
     
     //MARK: -> Initial
